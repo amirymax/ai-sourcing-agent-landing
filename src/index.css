@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Base: типографика, скролл, контраст ===== */
+@layer base {
+  :root {
+    /* слегка компактнее вертикальный ритм на мобилках */
+    --section-y-sm: 2.75rem; /* ~44px */
+    --section-y-md: 4rem;    /* 64px */
+    --section-y-lg: 5rem;    /* 80px */
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern";
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased bg-white text-gray-800;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  /* выделение текста — бренд */
+  ::selection {
+    background: theme('colors.brand.DEFAULT' / 0.18);
+  }
+
+  /* контейнер */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 72rem; /* ~1152px */
+  }
+
+  /* секции: динамические вертикальные отступы */
+  .section {
+    padding-top: var(--section-y-sm);
+    padding-bottom: var(--section-y-sm);
+  }
+  @media (min-width: 640px) {
+    .section {
+      padding-top: var(--section-y-md);
+      padding-bottom: var(--section-y-md);
+    }
+  }
+  @media (min-width: 1024px) {
+    .section {
+      padding-top: var(--section-y-lg);
+      padding-bottom: var(--section-y-lg);
+    }
+  }
+}
+
+/* ===== Components: кнопка, заголовки, подсекции ===== */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg px-5 py-3
+           font-semibold tracking-tight transition
+           bg-brand text-white hover:bg-brand-dark
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand
+           active:translate-y-[0.5px];
+  }
+
+  .section-title {
+    @apply text-[1.625rem] sm:text-3xl lg:text-4xl font-semibold tracking-tight text-gray-900;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .section-subtitle {
+    @apply mt-3 text-[0.975rem] sm:text-lg text-gray-600;
+  }
+
+  /* мелкие утилиты для карточек */
+  .card {
+    @apply rounded-2xl border border-gray-200 bg-white shadow-sm;
+  }
+
+  /* улучшенные фокусы для ссылок в хедере */
+  .nav-link {
+    @apply hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded;
+  }
+}
+
+/* ===== Motion & iOS backdrop fallbacks ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
